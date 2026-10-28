@@ -9,11 +9,14 @@ import {
   getPostById,
 } from "../controllers/postController";
 
+import { validate } from "../middlewares/validate";
+import { bulkPostSchema, createPostSchema } from "../validations/schema";
+
 const router = Router();
 
 // Wajib ditaruh di ATAS rute /:id
-router.post("/bulk", createBulkPosts);
-router.get("/stats/daily", getDailyPostStats);
+router.post("/bulk", validate(bulkPostSchema), createBulkPosts); // baris 18
+router.post("/", validate(createPostSchema), createPost);
 
 // Rute standar
 router.post("/", createPost);
